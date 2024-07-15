@@ -1,3 +1,22 @@
+@font-face {
+    font-family: "Roboto Mono";
+    src: url("fonts/RobotoMono.ttf");
+}
+
+#time-box {
+    -fx-background-color: #2f2f2f;
+    -fx-padding: 5px 10px;
+    -fx-alignment: center;
+}
+
+#main-box {
+    -fx-background-color: #1f1f1f;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+}
+
 .label {
-    
+    -fx-font-family: "Roboto Mono";
+    -fx-font-size: 40px;
+    -fx-text-fill: white;
 }
