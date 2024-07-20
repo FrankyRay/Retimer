@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class Time {
 
@@ -64,7 +65,7 @@ public class Time {
         updateTime();
     }
 
-    public void setTime(String timeString) {
+    public void setTime(String timeString) throws DateTimeParseException {
         time = LocalTime.parse(timeString);
         updateTime();
     }

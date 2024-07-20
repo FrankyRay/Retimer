@@ -13,6 +13,9 @@
     -fx-background-color: #1f1f1f;
     -fx-padding: 10px;
     -fx-alignment: center;
+    -fx-border-width: 1;
+    -fx-border-color: #2f2f2f;
+    -fx-border-style: solid;
 }
 
 .label {
