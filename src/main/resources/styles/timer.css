@@ -1,0 +1,73 @@
+@font-face {
+    font-family: "Roboto Mono";
+    src: url("../fonts/RobotoMono.ttf");
+}
+@font-face {
+    font-family: "Roboto Slab Bold";
+    src: url("../fonts/RobotoSlab-Bold.ttf");
+}
+@font-face {
+    font-family: "Roboto Slab Medium";
+    src: url("../fonts/RobotoSlab-Medium.ttf");
+}
+
+.label {
+    -fx-font-family: "Roboto Slab Bold";
+    -fx-text-fill: white;
+}
+
+#header-1 {
+    -fx-font-size: 14;
+}
+
+#description {
+    -fx-font-family: "Roboto Slab Medium";
+    -fx-font-size: 12;
+}
+
+#timer-in {
+    -fx-font-family: "Roboto Mono";
+    -fx-font-size: 32;
+    -fx-text-fill: white;
+    -fx-accent: #4f4f4f;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-border-color: transparent;
+}
+
+#timer-list, #timer-list:focused {
+    -fx-background-color: transparent, -fx-control-inner-background;
+    -fx-background-inset: 0, 1;
+    -fx-padding: 0;
+}
+
+#timer-list .list-cell {
+    -fx-cell-size: 40;
+}
+
+#timer-list .list-cell:filled:selected:focused,
+#timer-list .list-cell:filled:selected {
+    -fx-background-color: #3f3f3f;
+    -fx-text-fill: white;
+}
+
+#timer-list .list-cell {
+    -fx-background-color: #282828;
+}
+
+#timer-list .list-cell:even {
+    -fx-background-color: #2f2f2f;
+}
+
+#timer-list .list-cell:filled:hover {
+    -fx-background-color: #383838;
+    -fx-text-fill: white;
+}
+
+#control-timer {
+    -fx-background-color: #2f2f2f;
+    -fx-padding: 5;
+    -fx-background-radius: 5;
+    -fx-spacing: 3;
+}

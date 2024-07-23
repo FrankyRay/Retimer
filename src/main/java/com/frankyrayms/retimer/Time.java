@@ -52,7 +52,7 @@ public class Time {
 
         // Time Scene
         scene = new Scene(timeBox);
-        scene.getStylesheets().add(getClass().getResource("/time.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/styles/time.css").toExternalForm());
     }
 
     public void decrementTime() {

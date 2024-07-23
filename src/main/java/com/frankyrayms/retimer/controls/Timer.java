@@ -2,17 +2,17 @@ package com.frankyrayms.retimer.controls;
 
 import com.frankyrayms.retimer.Retimer;
 import com.frankyrayms.retimer.Time;
+import com.frankyrayms.retimer.data.TimerPreset;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
+import javafx.collections.ListChangeListener;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.time.format.DateTimeParseException;
@@ -31,6 +31,7 @@ public class Timer {
     private Timeline timeline;
 
     private final TextField quickTimeField;
+    private final Label quickDesc;
 
     public Timer(Time timeDisplay, Retimer mainApp) {
         this.timeDisplay = timeDisplay;
@@ -39,24 +40,48 @@ public class Timer {
         // Quick Timer
         Label quickLabel = new Label();
         quickLabel.setText("Quick Timer");
+        quickLabel.setId("header-1");
 
-        Label quickDesc = new Label();
-        quickDesc.setText("Set a quick timer!");
+        quickDesc = new Label();
+        quickDesc.setText("Set a timer!");
+        quickDesc.setId("description");
 
         quickTimeField = new TextField();
         quickTimeField.setText("00:00:00");
+        quickTimeField.setId("timer-in");
         quickTimeField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d{2}\\s*:\\s*\\d{2}\\s*:\\s*\\d{2}")) {
+            if (!newValue.matches("((\\d{1,2}\\s*:\\s*)?\\d{1,2}\\s*:\\s*)?\\d{1,2}")) {
                 quickDesc.setText("Invalid time format! Must be in HH:MM:SS format!");
-                quickDesc.setStyle("-fx-text-fill: red;");
+                quickDesc.setStyle("-fx-text-fill: orange;");
             } else {
-                quickDesc.setText("Set a quick timer!");
-                quickDesc.setStyle("-fx-text-fill: black;");
+                quickDesc.setText("Set a timer!");
+                quickDesc.setStyle("-fx-text-fill: white;");
             }
         });
 
         VBox quickBox = new VBox();
         quickBox.getChildren().addAll(quickLabel, quickTimeField, quickDesc);
+        quickBox.setId("control-timer");
+
+
+        // Preset list
+        Label timerLabel = new Label();
+        timerLabel.setText("Timer Preset");
+        timerLabel.setId("header-1");
+
+        ListView<VBox> timerList = new ListView<>();
+        timerList.setId("timer-list");
+        timerList.setPrefHeight(200);
+
+        // TEST: Adding preset
+        timerList.getItems().addAll(
+                createTimerPreset("Khotbah", "00:30:00"),
+                createTimerPreset("Perjamuan Kudus", "00:10:00")
+        );
+
+        VBox timerTableBox = new VBox();
+        timerTableBox.getChildren().addAll(timerLabel, timerList);
+        timerTableBox.setId("control-timer");
 
 
         // Timer control
@@ -77,23 +102,31 @@ public class Timer {
 
         HBox controlBox = new HBox();
         controlBox.getChildren().setAll(runButton, stopButton, lockButton);
+        controlBox.setId("control-timer");
 
+        VBox timerBox = new VBox();
+        timerBox.getChildren().setAll(quickBox, timerTableBox, controlBox);
+        timerBox.setId("control-box");
 
-        // Main config
-        VBox configBox = new VBox();
-        configBox.getChildren().setAll(quickBox);
-
-
-        BorderPane timerPane = new BorderPane();
-        timerPane.setCenter(configBox);
-        timerPane.setBottom(controlBox);
-
-        scene = new Scene(timerPane);
-        scene.getStylesheets().add(getClass().getResource("/timer.css").toExternalForm());
+        scene = new Scene(timerBox);
+        scene.getStylesheets().addAll(
+                getClass().getResource("/styles/control.css").toExternalForm(),
+                getClass().getResource("/styles/timer.css").toExternalForm()
+        );
     }
 
     public Scene getScene() {
         return scene;
+    }
+
+    private VBox createTimerPreset(String name, String time) {
+        Label timerName = new Label(name);
+        Label timerTime = new Label(time);
+
+        VBox timerPreset = new VBox();
+        timerPreset.getChildren().setAll(timerName, timerTime);
+        timerPreset.setPrefHeight(40);
+        return timerPreset;
     }
 
     private String parseTimerField() {
@@ -121,8 +154,8 @@ public class Timer {
         try {
             if (timeline == null) {
                 String time = parseTimerField();
-                quickTimeField.setText(time);
                 timeDisplay.setTime(time);
+                quickTimeField.setText(time);
 
                 timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
                 timeline.setCycleCount(Animation.INDEFINITE);
@@ -132,6 +165,8 @@ public class Timer {
             runButton.setText("Pause");
         } catch (DateTimeParseException err) {
             err.printStackTrace();
+            quickDesc.setText("Failed to parse! Consider check if the format matches HH:MM:DD.");
+            quickDesc.setStyle("-fx-text-fill: red;");
         }
     }
 
