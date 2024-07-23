@@ -72,6 +72,11 @@ public class Timer {
         ListView<VBox> timerList = new ListView<>();
         timerList.setId("timer-list");
         timerList.setPrefHeight(200);
+        timerList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                System.out.println(timerList.getSelectionModel().getSelectedItem().getChildren().getFirst());
+            }
+        });
 
         // TEST: Adding preset
         timerList.getItems().addAll(
@@ -99,6 +104,7 @@ public class Timer {
         lockButton = new Button();
         lockButton.setText("Lock");
         lockButton.setOnAction(event -> lockTimer());
+        lockButton.setTooltip(new Tooltip("Lock time window"));
 
         HBox controlBox = new HBox();
         controlBox.getChildren().setAll(runButton, stopButton, lockButton);

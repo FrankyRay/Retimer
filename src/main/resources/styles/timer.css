@@ -16,6 +16,20 @@
     -fx-text-fill: white;
 }
 
+.button {
+    -fx-pref-width: 60;
+    -fx-background-color: #3f3f3f;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #4f4f4f;
+}
+
+.button:pressed {
+    -fx-background-color: #383838;
+}
+
 #header-1 {
     -fx-font-size: 14;
 }
